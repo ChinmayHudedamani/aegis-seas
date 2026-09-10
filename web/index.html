@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS-SEAS | Autonomous Satellite Radar Oil Slick Intelligence System</title>
+    <!-- Leaflet CSS for Tactical Radar Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <header class="top-nav">
+        <div class="logo-group">
+            <div class="radar-pulse-icon"></div>
+            <div class="brand">
+                <h1>AEGIS-SEAS <span class="badge">SOVEREIGN C++20</span></h1>
+                <p class="subtitle">Autonomous Satellite Radar Oil Slick Intelligence & Polluter Attribution System</p>
+            </div>
+        </div>
+        <div class="action-bar">
+            <button id="btn-run-pipeline" class="btn btn-primary">
+                <span class="pulse-dot"></span> RUN DETECTION PIPELINE
+            </button>
+        </div>
+        <div class="telemetry-bar">
+            <div class="tele-item">
+                <span class="tele-label">PLATFORM</span>
+                <span class="tele-val text-cyan">Sentinel-1 (C-Band, 10m)</span>
+            </div>
+            <div class="tele-item">
+                <span class="tele-label">PROCESSING LATENCY</span>
+                <span class="tele-val text-green" id="latency-val">1.90 s</span>
+            </div>
+            <div class="tele-item">
+                <span class="tele-label">THREAT LEVEL</span>
+                <span class="tele-val text-red" id="threat-badge">ACTIVE SPILLS CONFIRMED</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- Left Column: Tactical GIS Map -->
+        <section class="card map-container">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="icon">🌐</span> TACTICAL SAR RADAR SCENE & SITUATIONAL LAYERS
+                </div>
+                <div class="layer-toggles">
+                    <button class="btn btn-sm active" id="btn-toggle-slicks">Oil Slicks</button>
+                    <button class="btn btn-sm active" id="btn-toggle-drift">Reverse Drift Plumes (95%)</button>
+                    <button class="btn btn-sm active" id="btn-toggle-cfar">CA-CFAR Contacts</button>
+                    <button class="btn btn-sm active" id="btn-toggle-ais">Suspect Vessels (AIS)</button>
+                </div>
+            </div>
+            <div id="map" class="radar-map"></div>
+        </section>
+
+        <!-- Right Column: Analytics & Attribution Dossiers -->
+        <section class="right-panel">
+            <!-- Detection Telemetry Dossier -->
+            <div class="card dossier-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">⚠️</span> DETECTED OIL SLICKS
+                    </div>
+                    <span class="badge-count" id="slick-count">Loading...</span>
+                </div>
+                <div class="dossier-list" id="dossier-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Polluter Attribution Dossier -->
+            <div class="card dossier-card attribution-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🚢</span> POLLUTER ATTRIBUTION DOSSIER
+                    </div>
+                    <span class="badge-count text-yellow" id="suspect-count">0 Suspects</span>
+                </div>
+                <div class="dossier-list" id="suspects-container">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Mathematical & Physical Metrics -->
+            <div class="card math-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🔬</span> PHYSICAL RADAR METRICS & HYDRODYNAMICS
+                    </div>
+                </div>
+                <div class="math-body">
+                    <div class="metric-row">
+                        <span class="m-label">Marangoni Wave Damping ($\Delta \sigma^0$):</span>
+                        <span class="m-val text-green" id="val-damping">+8.9 dB to +9.6 dB</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="m-label">CA-CFAR False Alarm Rate ($P_{\text{fa}}$):</span>
+                        <span class="m-val text-cyan" id="val-pfa">$10^{-5}$ (Adaptive 2D CUT)</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="m-label">Speckle Suppression Looks ($L$):</span>
+                        <span class="m-val">4.4 Equivalent Looks (Enhanced Lee)</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="m-label">Lagrangian Advection + Diffusion:</span>
+                        <span class="m-val" id="val-drift">Fay 3% Wind + CMEMS Surface Current</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
