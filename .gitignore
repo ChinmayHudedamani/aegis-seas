@@ -1,0 +1,35 @@
+# Prerequisites / Toolchains
+tools/
+tools/*
+tools/w64devkit/
+
+# Compiled Binaries & Object files
+build/
+bin/
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# IDE / Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS Artifacts
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# Temporary outputs (keep samples in data/ and web/)
+*.log
