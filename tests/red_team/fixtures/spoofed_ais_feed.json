@@ -1,0 +1,20 @@
+{
+  "scenario": "mmsi_speed_spoofing",
+  "spill_timestamp_epoch": 1700000000,
+  "spill_origin": {
+    "lon": -88.35,
+    "lat": 28.75
+  },
+  "ais_transmissions": [
+    {
+      "mmsi": "222222222",
+      "vessel_name": "TELEPORT_BULKER",
+      "vessel_type": "CARGO",
+      "lon": -88.35,
+      "lat": 28.75,
+      "speed_knots": 58.4,
+      "course_deg": 120.0,
+      "timestamp_epoch_sec": 1700000000
+    }
+  ]
+}

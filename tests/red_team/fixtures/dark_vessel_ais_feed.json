@@ -1,0 +1,39 @@
+{
+  "scenario": "dark_vessel_bilge_dumping",
+  "spill_timestamp_epoch": 1700000000,
+  "spill_origin": {
+    "lon": -88.35,
+    "lat": 28.75
+  },
+  "ais_transmissions": [
+    {
+      "mmsi": "111111111",
+      "vessel_name": "GHOST_CRUDE_CARRIER",
+      "vessel_type": "TANKER",
+      "lon": -88.34,
+      "lat": 28.74,
+      "speed_knots": 12.5,
+      "course_deg": 45.0,
+      "timestamp_epoch_sec": 1699978400
+    },
+    {
+      "mmsi": "111111111",
+      "vessel_name": "GHOST_CRUDE_CARRIER",
+      "vessel_type": "TANKER",
+      "lon": -88.36,
+      "lat": 28.76,
+      "speed_knots": 12.0,
+      "course_deg": 48.0,
+      "timestamp_epoch_sec": 1700007200
+    }
+  ],
+  "radar_hard_targets": [
+    {
+      "target_id": 101,
+      "lon": -88.348,
+      "lat": 28.748,
+      "peak_rcs_db": 19.4,
+      "snr_db": 24.1
+    }
+  ]
+}
