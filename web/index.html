@@ -6,35 +6,73 @@
     <title>AEGIS-SEAS | Autonomous Satellite Radar Oil Slick Intelligence System</title>
     <!-- Leaflet CSS for Tactical Radar Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
+    <!-- Top Navigation & Command Bar -->
     <header class="top-nav">
         <div class="logo-group">
             <div class="radar-pulse-icon"></div>
             <div class="brand">
-                <h1>AEGIS-SEAS <span class="badge">SOVEREIGN C++20</span></h1>
-                <p class="subtitle">Autonomous Satellite Radar Oil Slick Intelligence & Polluter Attribution System</p>
+                <div class="brand-title">
+                    <h1>AEGIS-SEAS</h1>
+                    <span class="badge badge-cxx">SOVEREIGN C++20</span>
+                    <span class="badge badge-india">INDIAN EEZ</span>
+                </div>
+                <p class="subtitle">Autonomous Satellite Radar Oil Slick Intelligence & Sovereign Polluter Attribution System</p>
             </div>
         </div>
+
+        <!-- Sector Switcher -->
+        <div class="sector-selector-group">
+            <span class="sector-label">OPERATIONAL THEATER:</span>
+            <div class="sector-buttons">
+                <button class="btn-sector active" data-sector="mumbai_high" id="sector-mumbai">
+                    <span class="dot"></span> Mumbai High (Arabian Sea)
+                </button>
+                <button class="btn-sector" data-sector="gulf_of_kutch" id="sector-kutch">
+                    <span class="dot"></span> Gulf of Kutch (Refinery)
+                </button>
+                <button class="btn-sector" data-sector="southern_corridor" id="sector-south">
+                    <span class="dot"></span> Southern Tanker Highway
+                </button>
+            </div>
+        </div>
+
+        <!-- Action Command Buttons -->
         <div class="action-bar">
-            <button id="btn-run-pipeline" class="btn btn-primary">
+            <button id="btn-run-pipeline" class="btn btn-primary" title="Execute native C++20 pipeline">
                 <span class="pulse-dot"></span> RUN DETECTION PIPELINE
             </button>
+            <button id="btn-toggle-live" class="btn btn-secondary" title="Toggle Real-Time Operations Monitoring">
+                <span class="live-indicator"></span> LIVE OPS: <span id="live-status-text">OFF</span>
+            </button>
+            <button id="btn-model-diagnostics" class="btn btn-outline" title="Inspect Model Training & Real Sentinel-1 Data">
+                <span class="icon">🔬</span> AI MODEL
+            </button>
+            <button id="btn-icg-report" class="btn btn-warning" title="Generate Sovereign Indian Coast Guard Incident Dossier">
+                <span class="icon">📜</span> ICG DISPATCH
+            </button>
         </div>
+
+        <!-- Mission Telemetry Ribbon -->
         <div class="telemetry-bar">
             <div class="tele-item">
-                <span class="tele-label">PLATFORM</span>
-                <span class="tele-val text-cyan">Sentinel-1 (C-Band, 10m)</span>
+                <span class="tele-label">RADAR PLATFORM</span>
+                <span class="tele-val text-cyan" id="tele-platform">Sentinel-1 (C-Band, 10m)</span>
+            </div>
+            <div class="tele-item">
+                <span class="tele-label">AI ENGINE</span>
+                <span class="tele-val text-green" id="tele-model">Real S1 Trained (5,969 Params)</span>
             </div>
             <div class="tele-item">
                 <span class="tele-label">PROCESSING LATENCY</span>
-                <span class="tele-val text-green" id="latency-val">1.90 s</span>
+                <span class="tele-val text-yellow" id="latency-val">1.10 s</span>
             </div>
             <div class="tele-item">
-                <span class="tele-label">THREAT LEVEL</span>
-                <span class="tele-val text-red" id="threat-badge">ACTIVE SPILLS CONFIRMED</span>
+                <span class="tele-label">THREAT STATUS</span>
+                <span class="tele-val text-red" id="threat-badge">ACTIVE SPILL CONFIRMED</span>
             </div>
         </div>
     </header>
@@ -44,16 +82,27 @@
         <section class="card map-container">
             <div class="card-header">
                 <div class="card-title">
-                    <span class="icon">🌐</span> TACTICAL SAR RADAR SCENE & SITUATIONAL LAYERS
+                    <span class="icon">🌐</span> TACTICAL RADAR SCENE & SITUATIONAL LAYERS
+                    <span class="sector-subtag" id="current-sector-tag">Mumbai High Basin (71.35°E, 19.35°N)</span>
                 </div>
                 <div class="layer-toggles">
                     <button class="btn btn-sm active" id="btn-toggle-slicks">Oil Slicks</button>
-                    <button class="btn btn-sm active" id="btn-toggle-drift">Reverse Drift Plumes (95%)</button>
+                    <button class="btn btn-sm active" id="btn-toggle-drift">Reverse Drift (95%)</button>
                     <button class="btn btn-sm active" id="btn-toggle-cfar">CA-CFAR Contacts</button>
                     <button class="btn btn-sm active" id="btn-toggle-ais">Suspect Vessels (AIS)</button>
+                    <button class="btn btn-sm active" id="btn-toggle-radar-beam">Radar Sweep</button>
+                    <button class="btn btn-sm" id="btn-toggle-satellite">Satellite Map</button>
                 </div>
             </div>
-            <div id="map" class="radar-map"></div>
+            <div id="map" class="radar-map">
+                <!-- Radar Sweep Beam Effect Overlay -->
+                <div id="radar-sweep-overlay" class="radar-sweep-beam"></div>
+            </div>
+            <!-- Live Ticker Overlay at bottom of Map -->
+            <div class="live-event-ticker" id="event-ticker">
+                <span class="ticker-badge">LIVE STREAM</span>
+                <span class="ticker-text" id="ticker-msg">Initializing AEGIS-SEAS Indian Ocean Maritime Surveillance Engine...</span>
+            </div>
         </section>
 
         <!-- Right Column: Analytics & Attribution Dossiers -->
@@ -62,7 +111,7 @@
             <div class="card dossier-card">
                 <div class="card-header">
                     <div class="card-title">
-                        <span class="icon">⚠️</span> DETECTED OIL SLICKS
+                        <span class="icon">⚠️</span> DETECTED OIL SLICKS (REAL U-NET)
                     </div>
                     <span class="badge-count" id="slick-count">Loading...</span>
                 </div>
@@ -75,7 +124,7 @@
             <div class="card dossier-card attribution-card">
                 <div class="card-header">
                     <div class="card-title">
-                        <span class="icon">🚢</span> POLLUTER ATTRIBUTION DOSSIER
+                        <span class="icon">🚢</span> SOVEREIGN POLLUTER ATTRIBUTION
                     </div>
                     <span class="badge-count text-yellow" id="suspect-count">0 Suspects</span>
                 </div>
@@ -84,34 +133,136 @@
                 </div>
             </div>
 
-            <!-- Mathematical & Physical Metrics -->
+            <!-- Real-Time Interactive Hydrodynamics & Physical Radar Metrics -->
             <div class="card math-card">
                 <div class="card-header">
                     <div class="card-title">
-                        <span class="icon">🔬</span> PHYSICAL RADAR METRICS & HYDRODYNAMICS
+                        <span class="icon">🌊</span> REAL-TIME HYDRODYNAMIC DRIFT SIMULATOR
                     </div>
                 </div>
                 <div class="math-body">
-                    <div class="metric-row">
-                        <span class="m-label">Marangoni Wave Damping ($\Delta \sigma^0$):</span>
+                    <div class="slider-control">
+                        <div class="slider-label-row">
+                            <span>Wind Velocity (Fay 3% Windage):</span>
+                            <span class="slider-val text-cyan" id="val-wind-spd">6.8 m/s</span>
+                        </div>
+                        <input type="range" id="slider-wind-spd" min="2.0" max="16.0" step="0.2" value="6.8">
+                    </div>
+
+                    <div class="slider-control">
+                        <div class="slider-label-row">
+                            <span>Wind Direction:</span>
+                            <span class="slider-val text-cyan" id="val-wind-dir">240° (SW Monsoon)</span>
+                        </div>
+                        <input type="range" id="slider-wind-dir" min="0" max="360" step="5" value="240">
+                    </div>
+
+                    <div class="slider-control">
+                        <div class="slider-label-row">
+                            <span>Surface Current (Arabian Sea):</span>
+                            <span class="slider-val text-green" id="val-current-spd">0.24 m/s (Konkan Drift)</span>
+                        </div>
+                        <input type="range" id="slider-current-spd" min="0.05" max="0.60" step="0.01" value="0.24">
+                    </div>
+
+                    <div class="metric-row" style="margin-top:0.6rem; border-top:1px solid rgba(255,255,255,0.06); padding-top:0.4rem;">
+                        <span class="m-label">Marangoni Capillary Damping:</span>
                         <span class="m-val text-green" id="val-damping">+8.9 dB to +9.6 dB</span>
                     </div>
                     <div class="metric-row">
-                        <span class="m-label">CA-CFAR False Alarm Rate ($P_{\text{fa}}$):</span>
-                        <span class="m-val text-cyan" id="val-pfa">$10^{-5}$ (Adaptive 2D CUT)</span>
+                        <span class="m-label">2D CA-CFAR Contact Sensitivity:</span>
+                        <span class="m-val text-cyan" id="val-pfa">P_fa = 10^-5 (Adaptive CUT)</span>
                     </div>
                     <div class="metric-row">
-                        <span class="m-label">Speckle Suppression Looks ($L$):</span>
-                        <span class="m-val">4.4 Equivalent Looks (Enhanced Lee)</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="m-label">Lagrangian Advection + Diffusion:</span>
-                        <span class="m-val" id="val-drift">Fay 3% Wind + CMEMS Surface Current</span>
+                        <span class="m-label">Monte Carlo Dispersion Particles:</span>
+                        <span class="m-val text-yellow">1,000 Particles / -4.0h Hindcast</span>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Modal: AI Model Training Diagnostics -->
+    <div class="modal-overlay" id="modal-diagnostics">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="icon">🔬</span> AI MODEL DIAGNOSTICS & SENTINEL-1 TRAINING DOSSIER
+                </div>
+                <button class="btn-close" id="btn-close-diagnostics">&times;</button>
+            </div>
+            <div class="modal-body" id="diagnostics-body">
+                <div class="diagnostics-grid">
+                    <div class="diag-card">
+                        <div class="diag-title">TRAINING DATASET</div>
+                        <div class="diag-val text-cyan">Copernicus Sentinel-1 C-Band SAR</div>
+                        <p class="diag-desc">Authentic dual-pol (VV+VH) oil spill segmentation tiles (open CC BY 4.0 benchmark). 10m spatial resolution.</p>
+                    </div>
+                    <div class="diag-card">
+                        <div class="diag-title">EMBEDDED ARCHITECTURE</div>
+                        <div class="diag-val text-green">Pure C++20 2D U-Net</div>
+                        <p class="diag-desc">5,969 parameters, 6 convolutional layers, bilinear upsampling, skip connections, SIMD OpenMP parallelized.</p>
+                    </div>
+                    <div class="diag-card">
+                        <div class="diag-title">VALIDATION METRICS</div>
+                        <div class="diag-val text-yellow" id="diag-dice-val">Dice Score: 41.2% | mIoU: 29.4%</div>
+                        <p class="diag-desc">Trained with combined Focal/BCE + Dice loss with class-weight compensation for severe marine surface imbalance.</p>
+                    </div>
+                    <div class="diag-card">
+                        <div class="diag-title">DEPLOYED WEIGHTS</div>
+                        <div class="diag-val text-green" id="diag-weights-file">data/unet_weights.bin</div>
+                        <p class="diag-desc">Verified binary weights loaded into C++ memory layout. Latency: ~1.1 seconds for 512x512 scene.</p>
+                    </div>
+                </div>
+
+                <div class="training-curve-section">
+                    <h3>Training Convergence & Loss Progression</h3>
+                    <div class="loss-chart-box" id="loss-chart-box">
+                        <!-- Rendered loss table / curve -->
+                        <table class="diag-table">
+                            <thead>
+                                <tr><th>Epoch</th><th>Train Loss</th><th>Val Loss</th><th>Val Dice</th><th>Val mIoU</th></tr>
+                            </thead>
+                            <tbody id="loss-table-body">
+                                <tr><td>01</td><td>0.9477</td><td>0.8940</td><td>7.1%</td><td>3.7%</td></tr>
+                                <tr><td>04</td><td>0.8957</td><td>0.8043</td><td>28.8%</td><td>18.3%</td></tr>
+                                <tr><td>08</td><td>0.8229</td><td>0.7486</td><td>45.8%</td><td>33.1%</td></tr>
+                                <tr><td>12</td><td>0.8089</td><td>0.7498</td><td>41.2%</td><td>29.4%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="btn-trigger-retrain">
+                        <span class="icon">🔄</span> RETRAIN MODEL ON SENTINEL-1 DATA
+                    </button>
+                    <button class="btn btn-secondary" id="btn-close-diag-bottom">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Indian Coast Guard (ICG) Official Incident Report -->
+    <div class="modal-overlay" id="modal-icg-report">
+        <div class="modal-content icg-report-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="icon">🇮🇳</span> INDIAN COAST GUARD (ICG) MARITIME POLLUTION INCIDENT REPORT
+                </div>
+                <button class="btn-close" id="btn-close-icg">&times;</button>
+            </div>
+            <div class="modal-body" id="icg-report-content">
+                <!-- Dynamic ICG Report populated via JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="window.print()">
+                    <span class="icon">🖨️</span> PRINT / EXPORT DOSSIER
+                </button>
+                <button class="btn btn-secondary" id="btn-close-icg-bottom">Close</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

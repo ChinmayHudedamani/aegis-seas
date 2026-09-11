@@ -11,47 +11,86 @@ using namespace std;
 int main(int argc, char* argv[]) {
     cout << "===================================================================\n";
     cout << "  AEGIS-SEAS: AUTONOMOUS SATELLITE RADAR OIL SPILL DETECTION (C++20)\n";
-    cout << "  Multi-Layer Attribution Engine | SIH 2026 Sovereign Architecture  \n";
+    cout << "  Indian Ocean Sovereign Intelligence & Maritime Polluter Attribution\n";
+    cout << "  Operational Theater: Arabian Sea & Indian Exclusive Economic Zone  \n";
     cout << "===================================================================\n\n";
 
     constexpr size_t ROWS = 512;
     constexpr size_t COLS = 512;
 
-    // 1. Simulation & Scene Ingestion
-    cout << "[Ingestion] Generating Synthetic Dual-Pol SAR Scene (" << ROWS << "x" << COLS << ")...\n";
+    // 1. Operational Theater & CLI Argument Parsing
+    string sector = "mumbai_high";
+    string ais_file = "data/indian_ocean_ais_traffic.csv";
+    string weights_file = "data/unet_weights.bin";
+
+    for (int i = 1; i < argc; ++i) {
+        string arg = argv[i];
+        if (arg == "--sector" && i + 1 < argc) {
+            sector = argv[++i];
+        } else if (arg == "--ais" && i + 1 < argc) {
+            ais_file = argv[++i];
+        } else if (arg == "--weights" && i + 1 < argc) {
+            weights_file = argv[++i];
+        }
+    }
+
+    // Configure Sector Georeferencing and Arabian Sea Hydrodynamics
+    sar::pipeline::PipelineConfig config;
+    config.model_weights_path = weights_file;
+    config.calibration.calibration_constant = 100.0f;
+    config.speckle_window_size = 7;
+    config.equivalent_looks = 4.4f;
+    config.segmentation_threshold = 0.35f;
+    config.damping_contrast_threshold_db = 5.5f;
+    config.hindcast_hours = -4.0; // 4-hour reverse drift
+    config.scene_timestamp_epoch_sec = 1700000000;
+    config.geo_transform.pixel_size_meters = 10.0;
+
+    if (sector == "gulf_of_kutch") {
+        cout << "[Theater] Active Sector: GULF OF KUTCH / JAMNAGAR SPM TERMINAL (GUJARAT)\n";
+        config.geo_transform.origin_lon = 69.35;
+        config.geo_transform.origin_lat = 22.45;
+        config.wind_speed_mps = 7.5f;
+        config.wind_direction_deg = 250.0f;
+        config.surface_current_u_mps = 0.30f;
+        config.surface_current_v_mps = 0.10f;
+    } else if (sector == "southern_corridor") {
+        cout << "[Theater] Active Sector: SOUTHERN SHIPPING HIGHWAY (SRI LANKA - NICOBAR DEEP SEA)\n";
+        config.geo_transform.origin_lon = 80.55;
+        config.geo_transform.origin_lat = 5.95;
+        config.wind_speed_mps = 8.2f;
+        config.wind_direction_deg = 225.0f;
+        config.surface_current_u_mps = 0.38f;
+        config.surface_current_v_mps = -0.05f;
+    } else {
+        // Default: Mumbai High Offshore Basin (Arabian Sea)
+        cout << "[Theater] Active Sector: MUMBAI HIGH OFFSHORE BASIN (ARABIAN SEA - ONGC SECTOR)\n";
+        config.geo_transform.origin_lon = 71.35;
+        config.geo_transform.origin_lat = 19.35;
+        config.wind_speed_mps = 6.8f;
+        config.wind_direction_deg = 240.0f; // SW Monsoon drift
+        config.surface_current_u_mps = 0.22f; // Eastward current towards Konkan coast
+        config.surface_current_v_mps = -0.08f;
+    }
+
+    cout << "  -> Georeference Origin: " << config.geo_transform.origin_lat << "°N, " 
+         << config.geo_transform.origin_lon << "°E (Resolution: 10m/px)\n";
+    cout << "  -> Hydrodynamics: Surface Current (" << config.surface_current_u_mps << ", " 
+         << config.surface_current_v_mps << ") m/s | Wind: " << config.wind_speed_mps << " m/s @ " 
+         << config.wind_direction_deg << "°\n\n";
+
+    // 2. Simulation & Scene Ingestion
+    cout << "[Ingestion] Sourcing Dual-Pol SAR Scene (" << ROWS << "x" << COLS << ")...\n";
     sar::core::Matrix2D<float> raw_vv;
     sar::core::Matrix2D<float> raw_vh;
     vector<sar::simulation::GroundTruthSlick> ground_truth;
     sar::simulation::SyntheticSARScene::generate_scene(ROWS, COLS, raw_vv, raw_vh, ground_truth);
-    cout << "  -> Synthetic scene synthesized with " << ground_truth.size() << " ground truth targets.\n";
+    cout << "  -> Synthetic SAR scene synthesized with " << ground_truth.size() << " ground truth targets.\n";
 
-    // 2. AIS Telemetry Ingestion
-    string ais_file = "data/sample_ais_traffic.csv";
-    for (int i = 1; i < argc - 1; ++i) {
-        if (string(argv[i]) == "--ais") {
-            ais_file = argv[i + 1];
-        }
-    }
+    // 3. AIS Telemetry Ingestion
     cout << "[Ingestion] Ingesting Maritime AIS Telemetry Feed ('" << ais_file << "')...\n";
     auto ais_feed = sar::io::AISParser::parse_csv_file(ais_file);
-    cout << "  -> Loaded " << ais_feed.size() << " maritime AIS position records.\n\n";
-
-    // 3. Configure Unified Pipeline
-    sar::pipeline::PipelineConfig config;
-    config.calibration.calibration_constant = 100.0f;
-    config.speckle_window_size = 7;
-    config.equivalent_looks = 4.4f;
-    config.segmentation_threshold = 0.40f;
-    config.damping_contrast_threshold_db = 5.5f;
-    config.wind_speed_mps = 7.2f;
-    config.wind_direction_deg = 55.0f;
-    config.surface_current_u_mps = 0.18f;
-    config.surface_current_v_mps = -0.06f;
-    config.hindcast_hours = -4.0; // 4-hour reverse drift
-    config.scene_timestamp_epoch_sec = 1700000000;
-    config.geo_transform.origin_lon = -88.35;
-    config.geo_transform.origin_lat = 28.75;
-    config.geo_transform.pixel_size_meters = 10.0;
+    cout << "  -> Loaded " << ais_feed.size() << " Indian EEZ maritime AIS position records.\n\n";
 
     sar::pipeline::PipelineOrchestrator orchestrator(config);
 

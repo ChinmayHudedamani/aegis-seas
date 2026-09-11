@@ -4,6 +4,7 @@
 #include "sar/physics/speckle_filter.hpp"
 #include "sar/geo/geo_types.hpp"
 #include <cstdint>
+#include <string>
 
 namespace sar::pipeline {
 
@@ -17,6 +18,8 @@ struct PipelineConfig {
     size_t tile_stride = 192;
     float segmentation_threshold = 0.40f;
     float damping_contrast_threshold_db = 5.5f;
+
+    std::string model_weights_path = "data/unet_weights.bin";
 
     geo::GeoTransform geo_transform;
     float wind_speed_mps = 7.2f;

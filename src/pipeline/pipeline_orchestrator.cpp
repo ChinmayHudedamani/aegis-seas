@@ -12,7 +12,7 @@ PipelineOrchestrator::PipelineOrchestrator(const PipelineConfig& config)
     : config_(config),
       calibrator_(config.calibration),
       speckle_filter_(config.speckle_window_size, config.equivalent_looks),
-      unet_model_(),
+      unet_model_(config.model_weights_path),
       reconstructor_(config.tile_size, config.tile_stride),
       slick_analyzer_(config.geo_transform),
       cfar_detector_(config.cfar_guard_cells, config.cfar_training_cells, config.cfar_pfa),

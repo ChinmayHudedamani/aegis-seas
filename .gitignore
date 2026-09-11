@@ -1,6 +1,4 @@
 # Prerequisites / Toolchains
-tools/
-tools/*
 tools/w64devkit/
 
 # Compiled Binaries & Object files
