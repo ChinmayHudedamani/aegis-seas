@@ -1,7 +1,13 @@
 CXX = g++
-CXXFLAGS = -std=c++20 -O3 -Wall -Wextra -Iinclude -fopenmp
+CXXFLAGS = -std=c++20 -O3 -Wall -Wextra -Iinclude -Isrc -fopenmp
 
-CORE_SRCS = src/physics/calibrator.cpp \
+CORE_SRCS = src/engine_sar/sar_reader.cpp \
+            src/engine_sar/cfar_detector.cpp \
+            src/engine_drift/weathering.cpp \
+            src/engine_drift/rk4_solver.cpp \
+            src/engine_kinematics/wake_inversion.cpp \
+            src/engine_dossier/statutory_dossier.cpp \
+            src/physics/calibrator.cpp \
             src/physics/speckle_filter.cpp \
             src/physics/polarimetry.cpp \
             src/nn/layers.cpp \
