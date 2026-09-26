@@ -883,3 +883,224 @@ input[type="range"]::-webkit-slider-thumb {
     font-size: 0.75rem;
     margin-top: 0.8rem;
 }
+
+/* Enhanced Dossier UI / UX Styles */
+.icg-report-modal {
+    max-width: 950px;
+    width: 95%;
+}
+
+.icg-emblem {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #38bdf8;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+}
+
+.icg-sub-badge {
+    font-size: 0.68rem !important;
+    font-weight: 700;
+    color: #fbbf24 !important;
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px dashed rgba(251, 191, 36, 0.4);
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+    margin-top: 0.4rem;
+}
+
+.dossier-table-wrapper {
+    margin-top: 0.6rem;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 0.5rem;
+    overflow-x: auto;
+}
+
+.dossier-table-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #fbbf24;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+}
+
+.dossier-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-align: left;
+}
+
+.dossier-table th {
+    background: rgba(30, 41, 59, 0.8);
+    color: #38bdf8;
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-weight: 600;
+}
+
+.dossier-table td {
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+}
+
+.dossier-table tfoot tr td {
+    border-top: 2px solid #38bdf8;
+    background: rgba(30, 41, 59, 0.6);
+    color: #38bdf8;
+    font-weight: 700;
+}
+
+.dossier-table tr.highlight-row {
+    background: rgba(239, 68, 68, 0.12);
+    border-left: 3px solid #ef4444;
+}
+
+.band-tag {
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 0.65rem;
+}
+
+.band-1 { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+.band-2 { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #c084fc; }
+.band-3 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+.band-4 { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; }
+
+.statutory-box {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 6px;
+    padding: 0.75rem;
+}
+
+.statutory-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 1rem;
+    font-size: 0.74rem;
+}
+
+.crypto-seal-box {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 6px;
+    padding: 0.65rem;
+    font-family: var(--font-mono);
+}
+
+.crypto-title {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #10b981;
+    margin-bottom: 0.3rem;
+}
+
+.crypto-hash, .crypto-sig {
+    font-size: 0.66rem;
+    color: #94a3b8;
+    word-break: break-all;
+    line-height: 1.3;
+}
+
+.crypto-time {
+    font-size: 0.66rem;
+    color: #38bdf8;
+    margin-top: 0.3rem;
+}
+
+/* Printable PDF High-Resolution Output Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    #modal-icg-report,
+    #modal-icg-report * {
+        visibility: visible;
+    }
+
+    #modal-icg-report {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        background: #ffffff !important;
+        color: #1e293b !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .modal-content.icg-report-modal {
+        box-shadow: none !important;
+        border: none !important;
+        background: #ffffff !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .modal-header, .modal-footer {
+        display: none !important;
+    }
+
+    .icg-dossier-box {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        border: 2px solid #0f172a !important;
+        padding: 1rem !important;
+    }
+
+    .icg-header-seal h2 {
+        color: #0f172a !important;
+    }
+
+    .icg-section-title {
+        color: #0284c7 !important;
+        border-bottom-color: #0284c7 !important;
+    }
+
+    .icg-data-grid div strong {
+        color: #0f172a !important;
+    }
+
+    .dossier-table {
+        color: #0f172a !important;
+    }
+
+    .dossier-table th {
+        background: #f1f5f9 !important;
+        color: #0284c7 !important;
+        border-bottom: 2px solid #94a3b8 !important;
+    }
+
+    .dossier-table td {
+        border-bottom: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+    }
+
+    .icg-alert-box {
+        background: #fef2f2 !important;
+        border: 1px solid #dc2626 !important;
+        color: #991b1b !important;
+    }
+
+    .crypto-seal-box {
+        background: #f8fafc !important;
+        border: 1px solid #059669 !important;
+        color: #065f46 !important;
+    }
+
+    .crypto-title { color: #059669 !important; }
+    .crypto-hash, .crypto-sig { color: #334155 !important; }
+    .crypto-time { color: #0284c7 !important; }
+}

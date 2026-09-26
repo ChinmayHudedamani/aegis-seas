@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEGIS-SEAS | Autonomous Satellite Radar Oil Slick Intelligence System</title>
+    <title>AEGIS-SEAS | Autonomous Satellite Radar Oil Slick Intelligence & Investigation Workspace</title>
     <!-- Leaflet CSS for Tactical Radar Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
                     <span class="badge badge-cxx">SOVEREIGN C++20</span>
                     <span class="badge badge-india">INDIAN EEZ</span>
                 </div>
-                <p class="subtitle">Autonomous Satellite Radar Oil Slick Intelligence & Sovereign Polluter Attribution System</p>
+                <p class="subtitle">Commercial Incident Intelligence &amp; Investigation Workspace — "Don't just detect the spill. Reconstruct the incident."</p>
             </div>
         </div>
 
@@ -51,8 +51,8 @@
             <button id="btn-model-diagnostics" class="btn btn-outline" title="Inspect Model Training & Real Sentinel-1 Data">
                 <span class="icon">🔬</span> AI MODEL
             </button>
-            <button id="btn-icg-report" class="btn btn-warning" title="Generate Sovereign Indian Coast Guard Incident Dossier">
-                <span class="icon">📜</span> ICG DISPATCH
+            <button id="btn-icg-report" class="btn btn-warning" title="Open Investigation-Ready Evidence Dossier">
+                <span class="icon">📜</span> INVESTIGATION DOSSIER
             </button>
         </div>
 
@@ -82,7 +82,7 @@
         <section class="card map-container">
             <div class="card-header">
                 <div class="card-title">
-                    <span class="icon">🌐</span> TACTICAL RADAR SCENE & SITUATIONAL LAYERS
+                    <span class="icon">🌐</span> TACTICAL RADAR SCENE &amp; SITUATIONAL LAYERS
                     <span class="sector-subtag" id="current-sector-tag">Mumbai High Basin (71.35°E, 19.35°N)</span>
                 </div>
                 <div class="layer-toggles">
@@ -124,7 +124,7 @@
             <div class="card dossier-card attribution-card">
                 <div class="card-header">
                     <div class="card-title">
-                        <span class="icon">🚢</span> SOVEREIGN POLLUTER ATTRIBUTION
+                        <span class="icon">🚢</span> CANDIDATE SOURCE VESSELS
                     </div>
                     <span class="badge-count text-yellow" id="suspect-count">0 Suspects</span>
                 </div>
@@ -143,7 +143,7 @@
                 <div class="math-body">
                     <div class="slider-control">
                         <div class="slider-label-row">
-                            <span>Wind Velocity (Fay 3% Windage):</span>
+                            <span>Wind Velocity (Fay 3.5% Windage):</span>
                             <span class="slider-val text-cyan" id="val-wind-spd">6.8 m/s</span>
                         </div>
                         <input type="range" id="slider-wind-spd" min="2.0" max="16.0" step="0.2" value="6.8">
@@ -175,7 +175,7 @@
                     </div>
                     <div class="metric-row">
                         <span class="m-label">Monte Carlo Dispersion Particles:</span>
-                        <span class="m-val text-yellow">1,000 Particles / -4.0h Hindcast</span>
+                        <span class="m-val text-yellow">5,000 Particles / -4.0h Hindcast</span>
                     </div>
                 </div>
             </div>
@@ -187,7 +187,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">
-                    <span class="icon">🔬</span> AI MODEL DIAGNOSTICS & SENTINEL-1 TRAINING DOSSIER
+                    <span class="icon">🔬</span> AI MODEL DIAGNOSTICS &amp; SENTINEL-1 TRAINING DOSSIER
                 </div>
                 <button class="btn-close" id="btn-close-diagnostics">&times;</button>
             </div>
@@ -216,9 +216,8 @@
                 </div>
 
                 <div class="training-curve-section">
-                    <h3>Training Convergence & Loss Progression</h3>
+                    <h3>Training Convergence &amp; Loss Progression</h3>
                     <div class="loss-chart-box" id="loss-chart-box">
-                        <!-- Rendered loss table / curve -->
                         <table class="diag-table">
                             <thead>
                                 <tr><th>Epoch</th><th>Train Loss</th><th>Val Loss</th><th>Val Dice</th><th>Val mIoU</th></tr>
@@ -243,21 +242,21 @@
         </div>
     </div>
 
-    <!-- Modal: Indian Coast Guard (ICG) Official Incident Report -->
+    <!-- Modal: Comprehensive VC-Grade Investigation-Ready Evidence Dossier -->
     <div class="modal-overlay" id="modal-icg-report">
         <div class="modal-content icg-report-modal">
             <div class="modal-header">
                 <div class="modal-title">
-                    <span class="icon">🇮🇳</span> INDIAN COAST GUARD (ICG) MARITIME POLLUTION INCIDENT REPORT
+                    <span class="icon">📜</span> INVESTIGATION-READY EVIDENCE DOSSIER (UNCLOS ART. 217 / MARPOL REG 15)
                 </div>
                 <button class="btn-close" id="btn-close-icg">&times;</button>
             </div>
             <div class="modal-body" id="icg-report-content">
-                <!-- Dynamic ICG Report populated via JS -->
+                <!-- Comprehensive Dynamic VC-Grade Investigation Report populated via JS -->
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" onclick="window.print()">
-                    <span class="icon">🖨️</span> PRINT / EXPORT DOSSIER
+                    <span class="icon">🖨️</span> PRINT / EXPORT STATUTORY DOSSIER (PDF)
                 </button>
                 <button class="btn btn-secondary" id="btn-close-icg-bottom">Close</button>
             </div>
