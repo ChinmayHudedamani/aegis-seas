@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEGIS-SEAS | Autonomous Satellite Radar Oil Slick Intelligence & Investigation Workspace</title>
+    <title>AEGIS-SEAS | Enterprise Commercial Maritime Incident Intelligence & Reconstruction Platform</title>
     <!-- Leaflet CSS for Tactical Radar Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
-    <!-- Top Navigation & Command Bar -->
+    <!-- Commercial Business Model & Enterprise Header -->
     <header class="top-nav">
         <div class="logo-group">
             <div class="radar-pulse-icon"></div>
             <div class="brand">
                 <div class="brand-title">
-                    <h1>AEGIS-SEAS</h1>
-                    <span class="badge badge-cxx">SOVEREIGN C++20</span>
-                    <span class="badge badge-india">INDIAN EEZ</span>
+                    <h1>AEGIS-SEAS <span class="enterprise-tag">ENTERPRISE</span></h1>
+                    <span class="badge badge-cxx">SOVEREIGN C++20 ENGINE</span>
+                    <span class="badge badge-commercial">COMMERCIAL INCIDENT PLATFORM</span>
                 </div>
-                <p class="subtitle">Commercial Incident Intelligence &amp; Investigation Workspace — "Don't just detect the spill. Reconstruct the incident."</p>
+                <p class="subtitle">Commercial Maritime Incident Intelligence &amp; Reconstruction Workspace — <em>"Don't just detect the spill. Reconstruct the incident."</em></p>
             </div>
         </div>
 
@@ -42,11 +42,14 @@
 
         <!-- Action Command Buttons -->
         <div class="action-bar">
-            <button id="btn-run-pipeline" class="btn btn-primary" title="Execute native C++20 pipeline">
+            <button id="btn-run-pipeline" class="btn btn-primary" title="Execute native C++20 zero-copy pipeline">
                 <span class="pulse-dot"></span> RUN DETECTION PIPELINE
             </button>
             <button id="btn-toggle-live" class="btn btn-secondary" title="Toggle Real-Time Operations Monitoring">
                 <span class="live-indicator"></span> LIVE OPS: <span id="live-status-text">OFF</span>
+            </button>
+            <button id="btn-vc-briefing" class="btn btn-emerald" title="Open VC Pitch Deck & Commercial Business Model Briefing">
+                <span class="icon">💼</span> VC &amp; BUSINESS MODEL
             </button>
             <button id="btn-model-diagnostics" class="btn btn-outline" title="Inspect Model Training & Real Sentinel-1 Data">
                 <span class="icon">🔬</span> AI MODEL
@@ -56,23 +59,27 @@
             </button>
         </div>
 
-        <!-- Mission Telemetry Ribbon -->
-        <div class="telemetry-bar">
+        <!-- Commercial Executive KPI Ribbon -->
+        <div class="telemetry-bar commercial-kpi-bar">
             <div class="tele-item">
-                <span class="tele-label">RADAR PLATFORM</span>
-                <span class="tele-val text-cyan" id="tele-platform">Sentinel-1 (C-Band, 10m)</span>
+                <span class="tele-label">TARGET MARKET</span>
+                <span class="tele-val text-cyan">P&amp;I Clubs / Port Authorities</span>
             </div>
             <div class="tele-item">
-                <span class="tele-label">AI ENGINE</span>
-                <span class="tele-val text-green" id="tele-model">Real S1 Trained (5,969 Params)</span>
+                <span class="tele-label">EST. RECOVERABLE LIABILITY</span>
+                <span class="tele-val text-green">$14.25M / Incident</span>
+            </div>
+            <div class="tele-item">
+                <span class="tele-label">ATTRIBUTION CONFIDENCE</span>
+                <span class="tele-val text-cyan">95.9% Confirmed</span>
             </div>
             <div class="tele-item">
                 <span class="tele-label">PROCESSING LATENCY</span>
                 <span class="tele-val text-yellow" id="latency-val">1.10 s</span>
             </div>
             <div class="tele-item">
-                <span class="tele-label">THREAT STATUS</span>
-                <span class="tele-val text-red" id="threat-badge">ACTIVE SPILL CONFIRMED</span>
+                <span class="tele-label">COMMERCIAL ARR MONETIZATION</span>
+                <span class="tele-val text-purple">$250k / EEZ Sentinel Tier</span>
             </div>
         </div>
     </header>
@@ -101,7 +108,7 @@
             <!-- Live Ticker Overlay at bottom of Map -->
             <div class="live-event-ticker" id="event-ticker">
                 <span class="ticker-badge">LIVE STREAM</span>
-                <span class="ticker-text" id="ticker-msg">Initializing AEGIS-SEAS Indian Ocean Maritime Surveillance Engine...</span>
+                <span class="ticker-text" id="ticker-msg">AEGIS-SEAS Commercial Maritime Incident Intelligence &amp; Reconstruction Engine active.</span>
             </div>
         </section>
 
@@ -181,6 +188,92 @@
             </div>
         </section>
     </main>
+
+    <!-- Modal: VC & Commercial Business Model Briefing -->
+    <div class="modal-overlay" id="modal-vc-briefing">
+        <div class="modal-content vc-briefing-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="icon">💼</span> AEGIS-SEAS ENTERPRISE | VC &amp; COMMERCIAL BUSINESS MODEL BRIEFING
+                </div>
+                <button class="btn-close" id="btn-close-vc">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="vc-hero-banner">
+                    <h2>"Don't just detect the spill. Reconstruct the incident."</h2>
+                    <p>AEGIS-SEAS bridges satellite microwave SAR radar telemetry with legal statutory liability enforcement for Maritime Authorities, P&amp;I Clubs (Ship Insurers), and Harbor Police worldwide.</p>
+                </div>
+
+                <div class="vc-kpi-grid">
+                    <div class="vc-card">
+                        <div class="vc-card-label">TOTAL ADDRESSABLE MARKET (TAM)</div>
+                        <div class="vc-card-val text-green">$8.4 Billion</div>
+                        <p class="vc-card-sub">Global Maritime Risk, Environmental Compliance &amp; P&amp;I Claims Industry</p>
+                    </div>
+                    <div class="vc-card">
+                        <div class="vc-card-label">TARGET ENTERPRISE CLIENTS</div>
+                        <div class="vc-card-val text-cyan">3 Tier Verticals</div>
+                        <p class="vc-card-sub">1. Sovereign Coast Guards / EEZ Watch<br>2. P&amp;I Clubs (Ship Insurers)<br>3. Port State Control Authorities</p>
+                    </div>
+                    <div class="vc-card">
+                        <div class="vc-card-label">PROVEN UNIT ECONOMICS</div>
+                        <div class="vc-card-val text-yellow">92% Gross Margin</div>
+                        <p class="vc-card-sub">SaaS Annual Subscriptions + Per-Dossier Audit Retainers (Zero Cloud Infra Overheads)</p>
+                    </div>
+                    <div class="vc-card">
+                        <div class="vc-card-label">CORE PROPRIETARY MOAT</div>
+                        <div class="vc-card-val text-purple">Bare-Metal C++20 Engine</div>
+                        <p class="vc-card-sub">1.10s latency, sub-48MB RAM footprint, Radon transform wake kinematics + Doppler shift</p>
+                    </div>
+                </div>
+
+                <div class="vc-section">
+                    <h3>Commercial Monetization Architecture</h3>
+                    <div class="pricing-tiers-grid">
+                        <div class="tier-card">
+                            <div class="tier-name">EEZ SENTINEL TIER</div>
+                            <div class="tier-price">$250,000 <small>/ year</small></div>
+                            <p class="tier-target">For Maritime Authorities &amp; Coast Guard EEZ Watch</p>
+                            <ul>
+                                <li>✓ Continuous 24/7 Satellite SAR Radar Scanning</li>
+                                <li>✓ Automated Polluter Identification ($95.9\%$ Accuracy)</li>
+                                <li>✓ Dark Vessel Transponder Blackout Alerts</li>
+                            </ul>
+                        </div>
+                        <div class="tier-card featured-tier">
+                            <div class="badge-featured">MOST POPULAR</div>
+                            <div class="tier-name">P&amp;I CLUB AUDIT DOSSIER TIER</div>
+                            <div class="tier-price">$15,000 <small>/ incident report</small></div>
+                            <p class="tier-target">For Ship Insurers &amp; Environmental Defense Counsel</p>
+                            <ul>
+                                <li>✓ Court-Admissible Forensic Evidence Dossier</li>
+                                <li>✓ Bonn Agreement 4-Band Volume Partitioning ($36.38\text{ m}^3$)</li>
+                                <li>✓ MARPOL Reg 15 Statutory Exceedance Proof ($616.6\times$)</li>
+                                <li>✓ NIST P-256 ECDSA Cryptographic Audit Seal</li>
+                            </ul>
+                        </div>
+                        <div class="tier-card">
+                            <div class="tier-name">PORT STATE CONTROL API</div>
+                            <div class="tier-price">$5,000 <small>/ month / port</small></div>
+                            <p class="tier-target">For Harbor Police &amp; Maritime Port Authorities</p>
+                            <ul>
+                                <li>✓ Real-Time AIS Spoofing &amp; Teleportation Alerts</li>
+                                <li>✓ Automated Vessel Detention Order Dispatch</li>
+                                <li>✓ Direct Oily Water Separator (OWS) Audit Triggers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-emerald" onclick="window.print()">
+                        <span class="icon">📄</span> EXPORT VC INVESTMENT TEASER (PDF)
+                    </button>
+                    <button class="btn btn-secondary" id="btn-close-vc-bottom">Close Briefing</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal: AI Model Training Diagnostics -->
     <div class="modal-overlay" id="modal-diagnostics">

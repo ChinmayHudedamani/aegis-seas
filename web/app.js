@@ -584,6 +584,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnCloseDiag) btnCloseDiag.addEventListener('click', () => modalDiag.classList.remove('active'));
     if (btnCloseDiagBottom) btnCloseDiagBottom.addEventListener('click', () => modalDiag.classList.remove('active'));
 
+    // Modal: VC & Enterprise Business Model Briefing
+    const modalVc = document.getElementById('modal-vc-briefing');
+    const btnOpenVc = document.getElementById('btn-vc-briefing');
+    const btnCloseVc = document.getElementById('btn-close-vc');
+    const btnCloseVcBottom = document.getElementById('btn-close-vc-bottom');
+
+    if (btnOpenVc) btnOpenVc.addEventListener('click', () => modalVc.classList.add('active'));
+    if (btnCloseVc) btnCloseVc.addEventListener('click', () => modalVc.classList.remove('active'));
+    if (btnCloseVcBottom) btnCloseVcBottom.addEventListener('click', () => modalVc.classList.remove('active'));
+
     if (btnRetrain) {
         btnRetrain.addEventListener('click', () => {
             btnRetrain.disabled = true;
